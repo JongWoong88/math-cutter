@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제지 커팅기</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --container-bg: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--secondary-color);
+            margin-bottom: 32px;
+        }
+
+        .type-selection {
+            margin-bottom: 20px;
+            padding: 20px 40px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .type-selection h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            background-color: #e9f5ff;
+            border-color: #0056b3;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .file-name {
+            color: var(--text-color);
+            font-weight: 500;
+            display: none; /* Hidden by default */
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+        }
+
+        .spinner {
+            border: 6px solid #f3f3f3; /* Light grey */
+            border-top: 6px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="spinner-overlay" id="spinner-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <h1>문제지 커팅기</h1>
+            <p>문제를 개별 이미지로 자동 분할 기능<br>ZIP 파일로 다운로드 가능</p>
+            
+            <div class="type-selection">
+                <h3>색상 처리 옵션</h3>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="normal" name="imageType" value="normal" checked>
+                        <label for="normal">일반 모드</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="inverse" name="imageType" value="inverse">
+                        <label for="inverse">색반전 모드</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upload-area" id="upload-area">
+                <input type="file" id="file-input" name="pdf_file" class="file-input" accept=".pdf" required>
+                <label for="file-input" class="file-label">
+                    <strong>파일을 선택</strong>하거나 여기에 끌어다 놓으세요.
+                </label>
+                <div class="file-name" id="file-name"></div>
+            </div>
+
+            <button type="submit" class="submit-btn">업로드 및 변환</button>
+        </form>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('upload-form');
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const fileNameDisplay = document.getElementById('file-name');
+        const fileLabel = document.querySelector('.file-label');
+        const submitBtn = document.querySelector('.submit-btn');
+        const spinnerOverlay = document.getElementById('spinner-overlay');
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+
+        // Highlight drop area when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, () => {
+                uploadArea.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, () => {
+                uploadArea.classList.remove('dragover');
+            }, false);
+        });
+
+        // Handle dropped files
+        uploadArea.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+
+            if (files.length > 1) {
+                alert('한 번에 하나의 파일만 업로드할 수 있습니다.');
+                resetUpload();
+                return;
+            }
+            
+            if (files.length > 0) {
+                const file = files[0];
+                if (validatePdfFile(file)) {
+                    fileInput.files = files;
+                    updateFileName(file);
+                } else {
+                    resetUpload();
+                }
+            }
+        }, false);
+        
+        // Handle file selection via click
+        uploadArea.addEventListener('click', (e) => {
+            // label의 기본 동작으로도 파일 탐색기가 열리므로, 이벤트가 label 또는 그 자식에게서 발생했다면
+            // JS가 중복으로 탐색기를 열지 않도록 막습니다.
+            if (e.target.closest('.file-label')) {
+                return;
+            }
+            // label 바깥 영역을 클릭했을 때 수동으로 파일 탐색기를 엽니다.
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                updateFileName(fileInput.files[0]);
+            } else {
+                resetUpload();
+            }
+        });
+
+        function validatePdfFile(file) {
+            // PDF 파일 타입 검증 (MIME 타입과 확장자 모두 체크)
+            const validTypes = ['application/pdf'];
+            const validExtensions = ['.pdf'];
+            const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+            
+            if (!validTypes.includes(file.type) && !validExtensions.includes(fileExtension)) {
+                alert('PDF 파일만 업로드 가능합니다.');
+                return false;
+            }
+            return true;
+        }
+
+        function updateFileName(file) {
+            if (file && validatePdfFile(file)) {
+                fileNameDisplay.textContent = file.name;
+                fileNameDisplay.style.display = 'block';
+                fileLabel.style.display = 'none';
+            } else {
+                resetUpload();
+            }
+        }
+
+        function resetUpload() {
+            fileInput.value = ''; // Clears the file list
+            fileNameDisplay.textContent = '';
+            fileNameDisplay.style.display = 'none';
+            fileLabel.style.display = 'block';
+        }
+
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('PDF 파일을 선택해주세요.');
+                return;
+            }
+
+            const originalButtonText = submitBtn.textContent;
+            submitBtn.textContent = '처리 중...';
+            submitBtn.disabled = true;
+            spinnerOverlay.style.display = 'flex';
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result.split(',')[1];
+                const selectedType = document.querySelector('input[name="imageType"]:checked').value;
+                
+                const payload = {
+                    files: [base64String],
+                    name: file.name,
+                    type: selectedType
+                };
+
+                fetch('https://d1egl14b0wua4e.cloudfront.net/cut', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.message || 'Server error') });
+                    }
+                    const contentDisposition = response.headers.get('content-disposition');
+                    let filename = 'images.zip';
+                    if (contentDisposition) {
+                        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                        if (filenameMatch && filenameMatch.length > 1) {
+                            filename = filenameMatch[1];
+                        }
+                    }
+                    return response.blob().then(blob => ({ blob, filename }));
+                })
+                .then(({ blob, filename }) => {
+                    spinnerOverlay.style.display = 'none';
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                    alert('변환이 완료되었습니다. ZIP 파일 다운로드가 시작됩니다.');
+                })
+                .catch(error => {
+                    spinnerOverlay.style.display = 'none';
+                    console.error('Error:', error);
+                    alert(`오류가 발생했습니다: ${error.message}`);
+                })
+                .finally(() => {
+                    submitBtn.textContent = originalButtonText;
+                    submitBtn.disabled = false;
+                    resetUpload();
+                });
+            };
+            
+            reader.onerror = function(error) {
+                console.error('FileReader error:', error);
+                alert('파일을 읽는 중 오류가 발생했습니다.');
+                submitBtn.textContent = originalButtonText;
+                submitBtn.disabled = false;
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+
+</body>
+</html>
