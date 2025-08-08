@@ -33,7 +33,7 @@
 2. **CloudFront 요청 수신 및 전달**: 클라이언트로부터 받은 요청을 처리합니다. 이 때 미리 정의된 커스텀 헤더 값`x-origin-verify`을 추가합니다.
 3. **Lambda 함수 호출**: CloudFront가 Lambda 함수를 호출합니다. 이 과정에서 사용자의 요청 정보(헤더, 본문 등)는 **이벤트(Event) 객체** 형태로 Lambda 함수에 전달됩니다.
 4. **Lambda 함수 실행**: Lambda 함수는 ECR에 저장된 도커 이미지를 기반으로 실행됩니다. 전달받은 이벤트 객체의 정보를 바탕으로 애플리케이션 로직을 수행합니다.
-5.  **응답 반환**: Gemini CLI 로직이 완료되면, Lambda 함수는 처리 결과를 **JSON 형식** 등의 응답으로 CloudFront에 반환합니다.
+5.  **응답 반환**: 어플리케이션 로직이 완료되면, Lambda 함수는 처리 결과를 **JSON 형식** 등의 응답으로 CloudFront에 반환합니다.
 6.  **사용자 응답**: CloudFront는 Lambda 함수로부터 받은 응답을 사용자에게 최종적으로 전달합니다.
 
 ### Application Flow
