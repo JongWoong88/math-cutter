@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koong's Lab - 개발자와 학습자를 위한 유틸리티 도구 모음</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="개발자와 학습자를 위한 다양한 온라인 유틸리티 도구 모음. PDF 분할, 이미지 변환, 텍스트 처리 등 업무 효율성을 높이는 필수 도구들을 제공합니다.">
+    <meta name="keywords" content="유틸리티 도구, 온라인 도구, 개발자 도구, PDF 도구, 이미지 도구, 텍스트 도구, 생산성 도구">
+    <meta name="robots" content="index, follow">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0 20px 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .header .tagline {
+            font-size: 1.25rem;
+            color: #64748b;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grid-section {
+            background-color: #f1f5f9;
+            padding: 40px 0;
+            margin: 0;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 0;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 32px 24px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 20px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.08);
+            border-color: #e2e8f0;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: #3b82f6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header .tagline {
+                font-size: 1.125rem;
+            }
+
+            .grid-section {
+                margin: 0;
+                padding: 30px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Koong's Lab</h1>
+            <p class="tagline">여러분의 업무 효율성을 높이는 필수 유틸리티 도구들을 한 곳에서</p>
+        </header>
+
+        <div class="grid-section">
+            <div class="container">
+                <div class="grid">
+                    <a href="pdf-exam-cutter/utility.html" class="card">
+                        <div class="card-icon">📄</div>
+                        <h3>문제지 커팅기</h3>
+                        <p>PDF 문제지를 각 문제별 이미지로 자동 분할하여 개별 이미지 파일로 변환합니다.</p>
+                    </a>
+
+                    <div class="card">
+                        <div class="card-icon">🔧</div>
+                        <h3>텍스트 도구</h3>
+                        <p>텍스트 변환, 포맷팅, 인코딩 등 다양한 텍스트 처리 기능을 제공합니다.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🖼️</div>
+                        <h3>이미지 도구</h3>
+                        <p>이미지 리사이징, 포맷 변환, 압축 등의 이미지 편집 기능을 제공합니다.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>개발자 도구</h3>
+                        <p>JSON 포맷터, Base64 인코더, URL 인코더 등 개발에 필요한 도구들을 제공합니다.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔐</div>
+                        <h3>보안 도구</h3>
+                        <p>해시 생성, 암호화/복호화, 비밀번호 생성 등의 보안 관련 도구를 제공합니다.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔗</div>
+                        <h3>URL 도구</h3>
+                        <p>URL 단축, QR 코드 생성, 링크 검증 등의 URL 관련 유틸리티를 제공합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>모든 파일 처리는 서버에서 안전하게 이루어지며, 개인정보 보호를 위해 처리 후 즉시 삭제됩니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add interactive hover effects for all cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.borderLeft = '4px solid #3b82f6';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.borderLeft = 'none';
+            });
+        });
+
+        // Add click handling for cards without links (coming soon functionality)
+        document.querySelectorAll('.card:not([href])').forEach(card => {
+            card.addEventListener('click', function() {
+                alert('Coming Soon...!!!');
+            });
+            
+            // Make non-linked cards appear clickable
+            card.style.cursor = 'pointer';
+        });
+    </script>
+</body>
+</html>

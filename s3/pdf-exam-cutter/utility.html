@@ -3,7 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문제지 커팅기</title>
+    <title>문제지 커팅기 - PDF 문제지를 개별 문제 이미지로 자동 분할</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="PDF 문제지를 각 문제별 이미지로 자동 분할하는 온라인 도구. 수학 문제지, 시험지를 개별 문제 이미지로 변환하여 ZIP으로 다운로드. 일반 모드와 색반전 모드 지원.">
+    <meta name="keywords" content="PDF 분할, 문제지 커팅, 이미지 변환, 수학 문제지, 시험지 분할, PDF to 이미지, 문제 분할기, 온라인 도구, 교육 도구">
+    <meta name="author" content="Math Cutter">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Korean">
+    <link rel="canonical" href="https://d1egl14b0wua4e.cloudfront.net/">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="문제지 커팅기 - PDF 문제지를 개별 문제 이미지로 자동 분할">
+    <meta property="og:description" content="PDF 문제지를 각 문제별 이미지로 자동 분할하는 온라인 도구. 수학 문제지, 시험지를 개별 문제 이미지로 변환하여 ZIP으로 다운로드.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://d1egl14b0wua4e.cloudfront.net/">
+    <meta property="og:site_name" content="문제지 커팅기">
+    <meta property="og:locale" content="ko_KR">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="문제지 커팅기 - PDF 문제지를 개별 문제 이미지로 자동 분할">
+    <meta name="twitter:description" content="PDF 문제지를 각 문제별 이미지로 자동 분할하는 온라인 도구. 수학 문제지, 시험지를 개별 문제 이미지로 변환하여 ZIP으로 다운로드.">
+    
+    <!-- Additional SEO Elements -->
+    <meta name="theme-color" content="#007bff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="문제지 커팅기">
+    <meta name="format-detection" content="telephone=no">
+    
     <style>
         :root {
             --primary-color: #007bff;
@@ -180,10 +209,39 @@
         <div class="spinner"></div>
     </div>
 
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "문제지 커팅기",
+        "description": "PDF 문제지를 각 문제별 이미지로 자동 분할하는 온라인 도구",
+        "url": "https://d1egl14b0wua4e.cloudfront.net/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "featureList": [
+            "PDF 파일을 개별 문제 이미지로 자동 분할",
+            "일반 모드와 색반전 모드 지원",
+            "ZIP 파일로 다운로드",
+            "드래그 앤 드롭 업로드"
+        ],
+        "inLanguage": "ko",
+        "creator": {
+            "@type": "Organization",
+            "name": "Math Cutter"
+        }
+    }
+    </script>
+
     <div class="container">
         <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
             <h1>문제지 커팅기</h1>
-            <p>문제를 개별 이미지로 자동 분할 기능<br>ZIP 파일로 다운로드 가능</p>
+            <p>각 문제를 개별 이미지로 자동 분할<br>ZIP 파일로 다운로드 가능</p>
             
             <div class="type-selection">
                 <h3>색상 처리 옵션</h3>
@@ -337,7 +395,7 @@
                     type: selectedType
                 };
 
-                fetch('https://d1egl14b0wua4e.cloudfront.net/cut', {
+                fetch('https://www.koonglab.co.kr/cut', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
