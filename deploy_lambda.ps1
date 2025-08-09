@@ -20,6 +20,10 @@ param(
     [Parameter(Mandatory=$false, HelpMessage="AWS Region")]
     [ValidateNotNullOrEmpty()]
     [string]$Region,
+
+    [Parameter(Mandatory=$false, HelpMessage="Target Directory")]
+    [ValidateNotNullOrEmpty()]
+    [string]$TargetDir,
     
     [Parameter(Mandatory=$false, HelpMessage="Docker Image Tag")]
     [ValidateNotNullOrEmpty()]
@@ -33,6 +37,7 @@ $AWS_ACCOUNT_ID = $AccountId
 $AWS_REGION = $Region
 $ECR_REPOSITORY_NAME = $RepoName
 $LAMBDA_FUNCTION_NAME = $FunctionName
+$TARGET_DIR = $TargetDir
 $DOCKER_IMAGE_TAG = $Tag
 
 # =============================================================================
@@ -52,7 +57,7 @@ Write-Host ""
 # 1. Build Docker Image (specify linux/amd64 platform)
 Write-Host "1. Building Docker image..." -ForegroundColor Yellow
 try {
-    docker build --platform linux/amd64 -t "$DOCKER_IMAGE_NAME" ./lambda
+    docker build --platform linux/amd64 -t "$DOCKER_IMAGE_NAME" $TARGET_DIR
     if ($LASTEXITCODE -ne 0) { throw "Docker build failed" }
     Write-Host "Success: Docker image build completed" -ForegroundColor Green
 } catch {
